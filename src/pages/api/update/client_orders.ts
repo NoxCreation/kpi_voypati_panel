@@ -18,7 +18,7 @@ export default async function handler(
         return res.status(200).json({ error: "Metodo no permitido" });
 
     const sync = await Sync.findOne()
-    if(sync == undefined)
+    if (sync == undefined)
         return res.status(200).json({ error: "Arrancar primero" });
     const syncAt = JSON.parse(JSON.stringify(sync)).syncAt.split("T")[0]
 
@@ -39,20 +39,26 @@ export default async function handler(
     );
 
     // Obtener órdenes paginadas
-    const { count, orders } = await getOrdersPaginate(
-        StatusEvent.completed,
-        pageNumber,
-        pageSizeNumber,
-        { startDate, endDate }
-    );
+    try {
+        const { count, orders } = await getOrdersPaginate(
+            StatusEvent.completed,
+            pageNumber,
+            pageSizeNumber,
+            { startDate, endDate }
+        );
 
-    const clients = await getClients(shouldRevalidate);
-    await saveOrdersByClients(orders, clients);
+        const clients = await getClients(shouldRevalidate);
+        await saveOrdersByClients(orders, clients);
 
-    res.status(200).json({
-        count,
-        orders
-    });
+        res.status(200).json({
+            count,
+            orders
+        });
+    }
+    catch (error) {
+        console.log('err', error)
+    }
+    res.status(400).json({});
 }
 
 // Guarda la relación de ordenes por clientes

@@ -13,7 +13,7 @@ export const mapOrders = (order: any) => ({
         last_name: order.client.user_data.last_name,
         image: order.client.user_data.image,
     } : undefined,
-    items: order.items.map((e: any) => ({
+    items: order.items ? order.items.map((e: any) => ({
         id: e.variant.id,
         product_id: e.variant.product_id,
         name: e.variant.name,
@@ -22,7 +22,7 @@ export const mapOrders = (order: any) => ({
         cost: e.data.cost,
         quantity: e.data.quantity,
         discount: e.data.discount
-    })),
+    })) : [],
     created_at: order.created_at,
     updated_at: order.updated_at,
 })

@@ -12,6 +12,9 @@ export const ModalUpdate = () => {
     const [error2, setError2] = useState(undefined as undefined | string)
 
     const handleUpdateClientOrder = async () => {
+        setError1("")
+        setError2("")
+
         const myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
 
