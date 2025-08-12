@@ -73,7 +73,7 @@ const ClientsByOrders = () => {
         summarySheet.getColumn(2).width = 30;
 
         const summaryRows = [
-            ["Nombre Completo", "Cantidad de ordenes"],
+            ["Nombre Completo", "Rango", "Cantidad de ordenes"],
         ];
 
         summaryRows.forEach((row, index) => {
@@ -94,6 +94,7 @@ const ClientsByOrders = () => {
         data.map(e => {
             const row = summarySheet.addRow([
                 e.fullname,
+                e.range_name,
                 e.orders.length
             ]);
 
