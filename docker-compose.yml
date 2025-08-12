@@ -1,7 +1,7 @@
 version: "3"
 
 services:
-  panelvoypati_production:
+  kpi_voypati:
     user: "1001"
     container_name: kpi_voypati
     image: kpi_voypati
@@ -9,7 +9,7 @@ services:
     ports:
       - '3002:3000'
     restart: always
-    command: sh -c "yarn run concurrently \"yarn start\" \"yarn cron\""
+    command: sh -c "yarn start"
     healthcheck:
       test: [ "CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/" ]
       interval: 30s
@@ -22,7 +22,26 @@ services:
       NODE_ENV: development  # Permite yarn install en volumen
     networks:
       default:
-        ipv4_address: 172.18.0.6
+        ipv4_address: 172.18.0.8
+
+  kpi_voypati_db:
+    container_name: kpi_voypati_db
+    platform: linux/amd64 
+    restart: unless-stopped
+    env_file: .env
+    image: postgres:15.0-alpine
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    volumes:
+      - ./data:/var/lib/postgresql/data/ 
+    ports:
+      - "5433:5432"
+    command: ["postgres", "-p", "5432"]
+    networks:
+      default:
+        ipv4_address: 172.18.0.9
 
 volumes:
   yarn_cache:  # Volumen dedicado para caché

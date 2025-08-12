@@ -42,11 +42,7 @@ COPY --from=builder --chown=nextjs:nodejs /app ./
 #COPY --from=builder --chown=nextjs:nodejs /app/src ./src
 
 # 3. Permisos y configuración final
-RUN chown nextjs:nodejs /app/database.sqlite
-RUN mkdir -p /app/public/download && \
-    chown -R nextjs:nodejs /app/public/download
 RUN mkdir -p /app && \
-    touch /app/database.sqlite && \
     chown -R nextjs:nodejs /app && \
     chmod -R 766 /app
 USER nextjs
@@ -55,4 +51,4 @@ ENV PORT 3000
 ENV NODE_ENV=production
 
 # 4. Comando de inicio
-CMD ["sh", "-c", "yarn run concurrently \"yarn start\" \"yarn cron\""]
+CMD ["sh", "-c", "yarn start"]
