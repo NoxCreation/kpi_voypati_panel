@@ -184,10 +184,10 @@ const ClientsByOrders = () => {
         // extrayendo ventas por rangos
         let data_by_ranges = data.reduce((p, c) => {
             if (p[c.range_name] == undefined) {
-                p[c.range_name] = 1
+                p[c.range_name] = c.orders.length
             }
             else {
-                p[c.range_name] += 1
+                p[c.range_name] += c.orders.length
             }
             return p
         }, {} as { [range: string]: number }) as any
@@ -200,7 +200,7 @@ const ClientsByOrders = () => {
 
         setDataLineCartOrderClient([])
         setDataLineCartOrders(getOrderByDates(data) as any)
-        console.log(getOrderByDates(data))
+        /* console.log(getOrderByDates(data)) */
 
         setLoading(false)
     }
@@ -210,6 +210,7 @@ const ClientsByOrders = () => {
 
     const getOrderByDates = (data: Array<DataClientsByOrdersType>) => {
         const targets = data.map(e => e.orders).reduce((p, c) => [...p, ...c], []);
+        //console.log("targets", targets)
 
         const result = {} as { [date: string]: number };
 
