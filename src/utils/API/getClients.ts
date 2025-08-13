@@ -32,7 +32,7 @@ export const getClients = async (shouldRevalidate: boolean = false): Promise<Arr
             public.users_range AS range ON client.range_id = range.id
         WHERE
             client.verified = true
-        ORDER BY client.created_at ASC
+        ORDER BY client.updated_at ASC
     `;
 
     const data = await queryDb2(query);

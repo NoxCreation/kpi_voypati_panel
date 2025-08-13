@@ -39,7 +39,7 @@ export default async function handler(
     const data = _data.map(user => ({
       ...user,
       orders: user.orders.filter(order => {
-        const orderDate = new Date(order.created_at);
+        const orderDate = new Date(order.updated_at);
         return orderDate >= startDate && orderDate <= endDate;
       })
     }));

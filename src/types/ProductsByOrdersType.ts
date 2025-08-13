@@ -3,6 +3,7 @@ export type OrderProductsByOrdersType = {
     order_id: string
     order_number: string
     created_at: string
+    updated_at: string
 }
 
 export type DataProductsByOrdersType = {

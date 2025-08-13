@@ -70,21 +70,21 @@ export const getOrdersPaginate = async (
 
     // Agregar condiciones de fecha si existen
     if (dateRange?.startDate) {
-        query += ` AND orders.created_at >= $${params.length + 1}`;
-        query_count += ` AND orders.created_at >= $${params_count.length + 1}`;
+        query += ` AND orders.updated_at >= $${params.length + 1}`;
+        query_count += ` AND orders.updated_at >= $${params_count.length + 1}`;
         params.push(new Date(dateRange.startDate).toISOString());
         params_count.push(new Date(dateRange.startDate).toISOString());
     }
 
     if (dateRange?.endDate) {
-        query += ` AND orders.created_at <= $${params.length + 1}`;
-        query_count += ` AND orders.created_at <= $${params_count.length + 1}`;
+        query += ` AND orders.updated_at <= $${params.length + 1}`;
+        query_count += ` AND orders.updated_at <= $${params_count.length + 1}`;
         params.push(new Date(dateRange.endDate).toISOString());
         params_count.push(new Date(dateRange.endDate).toISOString());
     }
 
     query += ` 
-        ORDER BY orders.created_at ASC
+        ORDER BY orders.updated_at ASC
         LIMIT $2
         OFFSET $3;
     `;

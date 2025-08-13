@@ -28,7 +28,7 @@ export const ClientMultipleSelector = ({
         // Primero: Inicializar todos los días con 0 para todos los usuarios
         targets.forEach(user => {
             user.orders.forEach(order => {
-                const orderDate = new Date(order.created_at);
+                const orderDate = new Date(order.updated_at);
                 const dateKey = orderDate.toISOString().split('T')[0];
                 allDates.add(dateKey);
 
